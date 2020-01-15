@@ -1,0 +1,40 @@
+trigger:
+  branches:
+    include:
+    - master
+  paths:
+    exclude:
+    - README.md
+    - src/AppContainerBuild/*
+    
+variables:
+  dockerUser: ''
+  imageRepository: 'logicappbuilt/app'
+  containerRegistry: '$(azureContainerRegistry)'
+  azureSubscription: '$(azureSubscriptionName)'
+  dockerfilePath: '$(Build.SourcesDirectory)/src/Dockerfile.app'
+  tag: '$(Build.BuildId)'
+  containerName: '$(containerRegistry)/$(imageRepository):$(tag)'
+  vmImageName: 'windows-2019'
+
+stages:
+- stage: Build
+  displayName: Build and push stage
+  jobs:  
+  - job: Build
+    displayName: Build Container
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: '$(azureSubscription)'
+        scriptType: 'batch'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          az acr login -n $(dockerUser)
+    - task: CmdLine@2
+      inputs:
+        script: |
+          docker build -t $(containerName) -f $(dockerfilePath) .
+          docker push $(containerName)
