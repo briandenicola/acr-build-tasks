@@ -5,16 +5,16 @@ trigger:
   paths:
     exclude:
     - README.md
-    - src/AppContainerBuild/*
+    - Notification/*
     
 variables:
-  dockerUser: ''
   imageRepository: 'logicappbuilt/app'
-  containerRegistry: '$(azureContainerRegistry)'
-  azureSubscription: '$(azureSubscriptionName)'
-  dockerfilePath: '$(Build.SourcesDirectory)/src/Dockerfile.app'
+  containerRegistry: ''
+  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile.app'
   tag: '$(Build.BuildId)'
+  dockerUser: ''
   containerName: '$(containerRegistry)/$(imageRepository):$(tag)'
+  azureSubscription: ''
   vmImageName: 'windows-2019'
 
 stages:
@@ -28,7 +28,7 @@ stages:
     steps:
     - task: AzureCLI@2
       inputs:
-        azureSubscription: '$(azureSubscription)'
+        azureSubscription: $(azureSubscription)
         scriptType: 'batch'
         scriptLocation: 'inlineScript'
         inlineScript: |

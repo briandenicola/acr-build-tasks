@@ -5,11 +5,11 @@
         "LogicAppName": {
             "type": "string"
         },
-        "VstsOrganizationName": {
+        "vsts_project": {
             "type": "string"
         },
-        "VstsBuildId": {
-            "type": "string"
+        "vsts_buildid": {
+                "type": "string"
         }
     },
     "variables": {
@@ -105,8 +105,8 @@
                                         "method": "post",
                                         "path": "/@{encodeURIComponent('Kubernetes')}/_apis/build/builds",
                                         "queries": {
-                                            "account": "[parameters('VstsOrganizationName')]",
-                                            "buildDefId": "[parameters('VstsBuildId')]"
+                                            "account": "[parameters('vsts_project')]",
+                                            "buildDefId": "[parameters('vsts_buildid')]"
                                         }
                                     },
                                     "runAfter": {},

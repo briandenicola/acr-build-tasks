@@ -5,11 +5,11 @@
         "LogicAppName": {
             "value": "ContainerNotification"
         },
-        "VstsOrganizationName": {
-            "value": ""
+        "vsts_project": {
+            "value": "bjd145"
         },
-        "VstsBuildId": {
-            "value": ""
+        "vsts_buildid": {
+            "value": "100"
         }
     }
 }
